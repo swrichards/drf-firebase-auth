@@ -14,12 +14,12 @@ DEFAULTS = {
     'CREDENTIALS': None
 }
 
+DEFAULTS['USER_MODEL'] = get_user_model()
+
 if USER_SETTINGS:
     DEFAULTS.update(USER_SETTINGS)
 
     if USER_SETTINGS['USER_MODEL']:
         user_model = import_string(USER_SETTINGS['USER_MODEL'])
-    else:
-        DEFAULTS['USER_MODEL'] = get_user_model()
 
 app_settings = DEFAULTS
