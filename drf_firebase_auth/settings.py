@@ -7,19 +7,19 @@ USER_SETTINGS = getattr(settings, 'DRF_FIREBASE_AUTH', None)
 DEFAULTS = {
     'JWT_LOOKUP_KEY': 'email',
     'USER_LOOKUP_KEY': 'email',
-    'USER_MODEL': None,
+    'USER_MODEL': get_user_model(),
     'AUTH_HEADER_SCHEMA': 'Bearer',
     'ALLOW_UNVERIFIED_EMAIL': True,
     'ALLOW_REVOKED': False,
     'CREDENTIALS': None
 }
 
-DEFAULTS['USER_MODEL'] = get_user_model()
-
 if USER_SETTINGS:
     DEFAULTS.update(USER_SETTINGS)
 
     if USER_SETTINGS['USER_MODEL']:
         user_model = import_string(USER_SETTINGS['USER_MODEL'])
+    else:
+        DEFAULTS['USER_MODEL'] = get_user_model()
 
 app_settings = DEFAULTS
