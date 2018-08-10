@@ -93,10 +93,11 @@ class FirebaseAuthentication(authentication.BaseAuthentication):
             return None
 
         try:
-            jwt_lookup_key = decoded_token.get(app_settings['JWT_LOOKUP_KEY'])
-            logger.debug("Looking up Django user: %s=%s" %
-                         (app_settings['USER_LOOKUP_KEY'], jwt_lookup_key))
             User = app_settings['USER_MODEL']
+            jwt_lookup_key = decoded_token.get(app_settings['JWT_LOOKUP_KEY'])
+            logger.debug("Looking up Django user [%s=%s] on model %s" %
+                         (app_settings['USER_LOOKUP_KEY'], jwt_lookup_key,
+                          type(User)))
             user_lookup = {
                 app_settings['USER_LOOKUP_KEY']: jwt_lookup_key
             }
